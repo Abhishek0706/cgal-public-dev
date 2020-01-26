@@ -21,6 +21,11 @@
 
 AlgebraicCurveParser::AlgebraicCurveParser(std::string &expression) : expression(expression) {};
 
+//! Check whether the expression is valid or not
+/*!
+ * \param expression string argument of the expression
+ * \return bool
+ */
 bool AlgebraicCurveParser::validateExpression(const std::string &expression) {
   std::string expressionMutable = expression;
   for (auto iterator = expressionMutable.begin(); iterator != expressionMutable.end(); iterator++) {
@@ -32,6 +37,10 @@ bool AlgebraicCurveParser::validateExpression(const std::string &expression) {
   return true;
 }
 
+//! Convert expression into algebric terms
+/*!
+ * \return Terms vector of AlgebricCurveTerms
+ */
 Terms AlgebraicCurveParser::extractTerms() {
   Terms algebraicTerms;
 
