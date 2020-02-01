@@ -44,16 +44,28 @@
 
 ArrangementDemoWindow *ArrangementDemoWindow::instance_ = NULL;
 
+//! Function to get Ui of Current Demo Window
+/*!
+ * \return Ui::ArrangementDemoWindow
+ */
 Ui::ArrangementDemoWindow* getCurrentDemoWindowUi()
 {
   return ArrangementDemoWindow::getInstance()->getUi();
 }
 
+//! Function to get view of current tab
+/*!
+ * \return ArrangementDemoGraphicsView
+ */
 ArrangementDemoGraphicsView* getCurrentView()
 {
   return ArrangementDemoWindow::getInstance()->getCurrentTab()->getView();
 }
 
+//! Constructor of ArrangementDemoWindow
+/*!
+ * \param parent Qwidget
+ */
 ArrangementDemoWindow::ArrangementDemoWindow(QWidget* parent) :
   CGAL::Qt::DemosMainWindow( parent ),
   ui( new Ui::ArrangementDemoWindow )
@@ -82,8 +94,14 @@ ArrangementDemoWindow::ArrangementDemoWindow(QWidget* parent) :
                     this, SLOT( updateConicType( QAction* ) ) );
 }
 
+//! Destructor of ArrangementDemoWindow Object
 ArrangementDemoWindow::~ArrangementDemoWindow() {}
 
+//! Function to create a new tab using the TraintTypes!
+/*!
+ * \param tt TraitsType
+ * \return ArrangementDemoTabBase
+ */
 ArrangementDemoTabBase* ArrangementDemoWindow::makeTab( TraitsType tt )
 {
   static int tabLabelCounter = 1;
@@ -188,6 +206,11 @@ ArrangementDemoTabBase* ArrangementDemoWindow::makeTab( TraitsType tt )
   return demoTab;
 }
 
+//! Function to get the ArrangementDemoTabBase object using the tabIndex
+/*!
+ * \param tabIndex unsigned int
+ * \return ArrangementDemoTabBase
+ */
 ArrangementDemoTabBase* ArrangementDemoWindow::getTab( unsigned int tabIndex )
   const
 {
@@ -195,6 +218,10 @@ ArrangementDemoTabBase* ArrangementDemoWindow::getTab( unsigned int tabIndex )
   return this->tabs[tabIndex];
 }
 
+//! Function to get the ArrangementDemoTabBase object of current tab
+/*!
+ * \return ArrangementDemoTabBase
+ */
 ArrangementDemoTabBase* ArrangementDemoWindow::getCurrentTab( ) const
 {
   int currentIndex = this->ui->tabWidget->currentIndex( );
@@ -205,6 +232,10 @@ ArrangementDemoTabBase* ArrangementDemoWindow::getCurrentTab( ) const
   return res;
 }
 
+//! Function for getting tab tables in a vector of QString
+/*!
+ * \return std::vector< QString >
+ */
 std::vector< QString > ArrangementDemoWindow::getTabLabels( ) const
 {
   std::vector< QString > res;
@@ -215,6 +246,10 @@ std::vector< QString > ArrangementDemoWindow::getTabLabels( ) const
   return res;
 }
 
+//! Function for getting all Arrangements in a vector of CGAL::Objects
+/*!
+ * \return std::vector< CGAL::Object >
+ */
 std::vector< CGAL::Object > ArrangementDemoWindow::getArrangements( ) const
 {
   std::vector< CGAL::Object > res;
@@ -225,6 +260,7 @@ std::vector< CGAL::Object > ArrangementDemoWindow::getArrangements( ) const
   return res;
 }
 
+//! Function to setup the ui of Toolbar in different Group containing respective actions
 void ArrangementDemoWindow::setupUi( )
 {
   this->ui->setupUi( this );
@@ -265,6 +301,10 @@ void ArrangementDemoWindow::setupUi( )
   this->updateFillColorSwatch( );
 }
 
+//! Function to update the mode selected from "Mode" in menu Or from the Toolbar
+/*!
+ * \param newMode QAction
+ */
 void ArrangementDemoWindow::updateMode( QAction* newMode )
 {
   // QWidget* widget = this->ui->tabWidget->currentWidget( );
@@ -329,6 +369,10 @@ void ArrangementDemoWindow::updateMode( QAction* newMode )
   this->updateFillColorSwatch( );
 }
 
+//! Function to reset Call back from tab of respective tab indexs
+/*!
+ * \param tabIndex unsigned int
+ */
 void ArrangementDemoWindow::resetCallbackState( unsigned int tabIndex )
 {
   if (tabIndex == static_cast<unsigned int>(-1)
@@ -381,6 +425,10 @@ void ArrangementDemoWindow::resetCallbackState( unsigned int tabIndex )
   }
 }
 
+//! Function to remove the call back in the current tab
+/*!
+ * \param tabIndex unsigned int
+ */
 void ArrangementDemoWindow::removeCallback( unsigned int tabIndex )
 {
   if (tabIndex == static_cast<unsigned int>(-1)) return;
@@ -439,6 +487,7 @@ void ArrangementDemoWindow::removeCallback( unsigned int tabIndex )
 #endif
 }
 
+//! Function to update the color value when click on "Fill color" option in Toolbar
 void ArrangementDemoWindow::updateFillColorSwatch( )
 {
   unsigned int currentTabIndex = this->ui->tabWidget->currentIndex( );
@@ -457,6 +506,10 @@ void ArrangementDemoWindow::updateFillColorSwatch( )
   this->ui->actionFillColor->setIcon( fillColorIcon );
 }
 
+//! Function to open an arr file from system
+/*!
+ * \param filename Qstring
+ */
 void ArrangementDemoWindow::openArrFile( QString filename )
 {
   int index = this->ui->tabWidget->currentIndex( );
@@ -611,6 +664,10 @@ void ArrangementDemoWindow::openArrFile( QString filename )
   ifs.close( );
 }
 
+//! Function to open a dat file from system
+/*!
+ * \param filename QString
+ */
 void ArrangementDemoWindow::openDatFile( QString filename )
 {
   int index = this->ui->tabWidget->currentIndex( );
@@ -727,6 +784,10 @@ void ArrangementDemoWindow::openDatFile( QString filename )
   inputFile.close();
 }
 
+//! Functio to view/hide Upper and/or Lower envelop in current tab
+/*!
+ * \param newMode QAction
+ */
 void ArrangementDemoWindow::updateEnvelope( QAction* newMode )
 {
   if ( this->ui->tabWidget->currentIndex( ) == -1 ) return;
@@ -746,6 +807,10 @@ void ArrangementDemoWindow::updateEnvelope( QAction* newMode )
   }
 }
 
+//! Function to enable snapping which further enable the Grid View
+/*!
+ * \param newMode QAction in Toolbar
+ */
 void ArrangementDemoWindow::updateSnapping( QAction* newMode )
 {
   ArrangementDemoTabBase* activeTab =
@@ -780,6 +845,10 @@ void ArrangementDemoWindow::updateSnapping( QAction* newMode )
   activeScene->update( );
 }
 
+//! update conic type to segment/ray/line if linear Or circle/ellipse/threepoint/fivepoint if conic Or add algebric curve according to QAction
+/*!
+ * \param newType QAction
+ */
 void ArrangementDemoWindow::updateConicType( QAction* newType )
 {
   ArrangementDemoTabBase* activeTab =
@@ -898,6 +967,7 @@ void ArrangementDemoWindow::updateConicType( QAction* newType )
   }
 }
 
+//! Function to save the file when click on "Save as" option in "file" menu using the respective file formatter
 void ArrangementDemoWindow::on_actionSaveAs_triggered( )
 {
   int index = this->ui->tabWidget->currentIndex( );
@@ -1031,6 +1101,7 @@ void ArrangementDemoWindow::on_actionSaveAs_triggered( )
   ofs.close( );
 }
 
+//! Function to open a file with extension .arr when click on "Open" in "file" menu
 void ArrangementDemoWindow::on_actionOpen_triggered( )
 {
   int index = this->ui->tabWidget->currentIndex( );
@@ -1104,11 +1175,13 @@ void ArrangementDemoWindow::on_actionOpen_triggered( )
   }
 }
 
+//! Function to quit the application
 void ArrangementDemoWindow::on_actionQuit_triggered( )
 {
   qApp->exit( );
 }
 
+//! Function to open a new tab when click on "New tab" option in "file" menu which opens a TabDialog to select the curve type
 void ArrangementDemoWindow::on_actionNewTab_triggered( )
 {
   NewTabDialog* newTabDialog = new NewTabDialog;
@@ -1147,6 +1220,7 @@ void ArrangementDemoWindow::on_actionNewTab_triggered( )
   delete newTabDialog;
 }
 
+//! Function to disable/enable tools in toolbar according to the curve type in current tab
 void ArrangementDemoWindow::on_tabWidget_currentChanged( )
 {
   if ( this->ui->tabWidget->currentIndex( ) == -1 )
@@ -1278,6 +1352,7 @@ void ArrangementDemoWindow::on_tabWidget_currentChanged( )
   this->updateMode(this->ui->actionInsert);
 }
 
+//! Function to overlay content of two tabs into a new one when click on "overlay" option in "Tool" menu
 void ArrangementDemoWindow::on_actionOverlay_triggered( )
 {
   OverlayDialog* overlayDialog = new OverlayDialog( this );
@@ -1365,6 +1440,7 @@ void ArrangementDemoWindow::on_actionOverlay_triggered( )
   delete overlayDialog;
 }
 
+//! Function to close the current tab when click on "Colse tab" option in "File" menu
 void ArrangementDemoWindow::on_actionCloseTab_triggered( )
 {
   unsigned int currentTabIndex = this->ui->tabWidget->currentIndex( );
@@ -1389,6 +1465,7 @@ void ArrangementDemoWindow::on_actionCloseTab_triggered( )
 
 }
 
+//! Function to print the curve
 void ArrangementDemoWindow::on_actionPrintConicCurves_triggered( )
 {
   // int currentTabIndex = this->ui->tabWidget->currentIndex( );
@@ -1442,6 +1519,7 @@ void ArrangementDemoWindow::on_actionPrintConicCurves_triggered( )
   // }
 }
 
+//! function to zoom in the current tab view by 2x
 void ArrangementDemoWindow::on_actionZoomIn_triggered( )
 {
   unsigned int currentTabIndex = this->ui->tabWidget->currentIndex( );
@@ -1451,6 +1529,7 @@ void ArrangementDemoWindow::on_actionZoomIn_triggered( )
   view->scale( 2.0, 2.0 );
 }
 
+//! Function to zoom out the current tab view by 0.5x
 void ArrangementDemoWindow::on_actionZoomOut_triggered( )
 {
   unsigned int currentTabIndex = this->ui->tabWidget->currentIndex( );
@@ -1460,6 +1539,7 @@ void ArrangementDemoWindow::on_actionZoomOut_triggered( )
   view->scale( 0.5, 0.5 );
 }
 
+//! Function to change the color and width preference of Edge, Vertex, Envelop, Vertical Ray and Grid Size and color
 void ArrangementDemoWindow::on_actionPreferences_triggered( )
 {
   unsigned int currentTabIndex = this->ui->tabWidget->currentIndex( );
@@ -1542,6 +1622,7 @@ void ArrangementDemoWindow::on_actionPreferences_triggered( )
   }
 }
 
+//! Function to choose and fill the color in an area
 void ArrangementDemoWindow::on_actionFillColor_triggered( )
 {
   unsigned int currentTabIndex = this->ui->tabWidget->currentIndex( );
