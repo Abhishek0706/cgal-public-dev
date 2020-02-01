@@ -28,6 +28,12 @@
 
 // TODO: Don't color the text, but set an icon for each arrangement type...
 // TODO: Or maybe don't bother
+
+//! Constructor for OverlayDialog
+/*!
+ * \param parent ArrangementDemoWindow
+ * \param f Qt::WindowFlags
+ */
 OverlayDialog::OverlayDialog( ArrangementDemoWindow* parent,
 							  Qt::WindowFlags f ) :
   QDialog( parent, f ),
@@ -99,6 +105,10 @@ OverlayDialog::OverlayDialog( ArrangementDemoWindow* parent,
   }
 }
 
+//! Function to return vector of CGAL::Object which are present in Tabs
+/*!
+ * \return std::vector< CGAL::Object >
+ */
 std::vector< CGAL::Object >
 OverlayDialog::selectedArrangements( ) const
 {
@@ -113,6 +123,7 @@ OverlayDialog::selectedArrangements( ) const
   return res;
 }
 
+//! Function for picking the CGAL::objects to overlay them
 void OverlayDialog::on_pickPushButton_pressed( )
 {
   int currentIndex = this->ui->arrangementsListWidget->currentRow( );
@@ -142,6 +153,7 @@ void OverlayDialog::on_pickPushButton_pressed( )
   this->restrictSelection( takenItem );
 }
 
+//! Function for unpicking the CGAL::objects from selected CGAL::objects to overlay
 void OverlayDialog::on_unpickPushButton_pressed( )
 {
   int currentIndex = this->ui->overlayListWidget->currentRow( );
@@ -164,6 +176,7 @@ void OverlayDialog::on_unpickPushButton_pressed( )
 	this->unrestrictSelection( );
 }
 
+//! Function that restrict the Selection of CGAL::Objects of different TraitsType
 void OverlayDialog::restrictSelection( QListWidgetItem* item )
 {
   CGAL::Object o = item->data( ARRANGEMENT ).value< CGAL::Object >( );
@@ -278,6 +291,7 @@ void OverlayDialog::restrictSelection( QListWidgetItem* item )
   }
 }
 
+//! Function to unrestrict the selection of different CGAL::Objects
 void OverlayDialog::unrestrictSelection( )
 {
   for ( int i = 0; i < this->ui->arrangementsListWidget->count( ); ++i )
