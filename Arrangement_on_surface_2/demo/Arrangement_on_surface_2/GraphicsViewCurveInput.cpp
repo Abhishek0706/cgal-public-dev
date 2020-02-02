@@ -25,6 +25,10 @@
 namespace CGAL {
 namespace Qt {
 
+//! Function to set the Scene using QGraphicScene
+/*!
+ * \param scene_ QGraphicScene
+ */
 void GraphicsViewCurveInputBase::setScene( QGraphicsScene* scene_ )
 {
   this->QGraphicsSceneMixin::setScene( scene_ );
@@ -41,17 +45,25 @@ QGraphicsScene* GraphicsViewCurveInputBase::getScene( ) const
 }
 #endif
 
+//! Function to set Snapping enable/disable using the bool value provided
+/*!
+ * \param b bool
+ */
 void GraphicsViewCurveInputBase::setSnappingEnabled( bool b )
 {
   this->snappingEnabled = b;
 }
 
+//! Function to set SnapToGrid enable/disable using the bool value provided
 void GraphicsViewCurveInputBase::setSnapToGridEnabled( bool b )
 {
   this->snapToGridEnabled = b;
 }
 
-/*! Constructor */
+//! Constructor for GraphicsViewCurveInputBase
+/*!
+ * \param parent Qobject
+ */
 GraphicsViewCurveInputBase::GraphicsViewCurveInputBase( QObject* parent ) :
     GraphicsViewInput( parent ),
 //    scene( NULL ),
@@ -73,6 +85,12 @@ mousePressEvent(QGraphicsSceneMouseEvent* /* event */)
   // std::cout << "GraphicsViewCurveInputBase::mousePressEvent" << std::endl;
 }
 
+//! Function to delect mouse event(move/press) and send event argument in respective method
+/*!
+ * \param obj QObject
+ * \param event QEvent
+ * \return bool
+ */
 bool GraphicsViewCurveInputBase::eventFilter( QObject* obj, QEvent* event )
 {
   if ( event->type( ) == QEvent::GraphicsSceneMouseMove )
@@ -91,12 +109,20 @@ bool GraphicsViewCurveInputBase::eventFilter( QObject* obj, QEvent* event )
   return QObject::eventFilter( obj, event );
 }
 
+//! Function to set color using QColor
+/*!
+ * \param c QColor
+ */
 void GraphicsViewCurveInputBase::setColor( QColor c )
 {
   this->color = c;
   this->pointsGraphicsItem.setColor( this->color );
 }
 
+//! Function to get the value of current color
+/*!
+ * \return QColor
+ */
 QColor GraphicsViewCurveInputBase::getColor( ) const
 {
   return this->color;
